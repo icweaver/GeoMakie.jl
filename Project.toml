@@ -5,6 +5,7 @@ version = "0.7.16"
 
 [deps]
 Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
+ComputePipeline = "95dc2771-c249-4cd0-9c9f-1f3b4330693c"
 CoordinateTransformations = "150eb455-5306-5404-9cee-2592286d6298"
 Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 GeoFormatTypes = "68eda718-8dee-11e9-39e7-89f7f65f511f"
@@ -22,6 +23,13 @@ Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 StructArrays = "09ab397b-f2b6-538f-b94a-2f83cf4a842a"
 
+[sources]
+Makie = {rev="units-matrix", subdir="Makie", url="https://github.com/icweaver/Makie.jl"}
+CairoMakie = {rev="ff/breaking-0.25", subdir="CairoMakie", url="https://github.com/MakieOrg/Makie.jl"}
+ComputePipeline = {rev="ff/breaking-0.25", subdir="ComputePipeline", url="https://github.com/MakieOrg/Makie.jl"}
+GeoInterface = {rev="makie-v0.25", url="https://github.com/icweaver/GeoInterface.jl"}
+GeoJSON = {rev="makie-v0.25", url="https://github.com/icweaver/GeoJSON.jl"}
+
 [compat]
 Colors = "0.12, 0.13"
 CoordinateTransformations = "0.6.3"
@@ -34,7 +42,7 @@ GeometryBasics = "0.5"
 GeometryOps = "0.1.6"
 ImageIO = "0.6"
 LinearAlgebra = "1"
-Makie = "0.24"
+Makie = "0.24, 0.25"
 NaturalEarth = "0.1"
 Proj = "1"
 Reexport = "1"
