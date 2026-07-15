@@ -55,6 +55,7 @@ examples = String[
     "rotating_earth.jl",
     "sticker.jl",
     "piracy_at_sea.jl",
+    "geoid.jl",
     joinpath("specialized", "satellite", "dashboard.jl"),
     joinpath("specialized", "satellite", "sweep_points.jl"),
 ]
@@ -84,6 +85,7 @@ doc = Documenter.makedocs(;
             "Architecture" => "architecture.md",
             "Adding demos" => "adding_demos.md",
         ],
+        "API reference" => "api.md",
         "Examples" => joinpath.(("examples",), replace.(examples, (".jl" => ".md",))),
     ],
     sitename="GeoMakie.jl",
