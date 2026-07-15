@@ -525,6 +525,7 @@ function _create_plot!(F, attributes::Dict, ax::GlobeAxis, args...)
     source = pop!(attributes, :source, ax.source)
     zlevel = pop!(attributes, :zlevel, 0)
     # dest = pop!(attributes, :dest, nothing)
+    get!(attributes, :force_dimconverts, true)
     plot = Plot{Makie.default_plot_func(F, args)}(args, attributes)
     plot.kw[:source] = source
     plot.kw[:zlevel] = zlevel

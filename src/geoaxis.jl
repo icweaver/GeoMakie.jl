@@ -895,6 +895,7 @@ end
 function _create_plot!(F, attributes::Dict, ax::GeoAxis, args...)
     source = pop!(attributes, :source, nothing)
     dest = pop!(attributes, :dest, nothing)
+    get!(attributes, :force_dimconverts, true)
     plot = Plot{Makie.default_plot_func(F, args)}(args, attributes)
     isnothing(source) || (plot.kw[:source] = source)
     isnothing(dest) || (plot.kw[:dest] = dest)

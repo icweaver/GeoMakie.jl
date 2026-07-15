@@ -24,7 +24,11 @@ the provided image.  Its conversion trait is `ImageLike`.
     You can control the density of the mesh by the `npoints` attribute.
 
 """
-@recipe MeshImage (x, y, img) begin
+@recipe MeshImage (
+    x::Makie.EndPoints,
+    y::Makie.EndPoints,
+    img::AbstractMatrix{<:Union{Makie.FloatType, Colorant}},
+) begin
     """
     The number of points the mesh should have per side.  
     Can be an Integer or a 2-tuple of integers representing number of points per side.

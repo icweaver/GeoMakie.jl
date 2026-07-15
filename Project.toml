@@ -29,7 +29,7 @@ CairoMakie = {rev = "ff/breaking-0.25", subdir = "CairoMakie", url = "https://gi
 ComputePipeline = {rev = "ff/breaking-0.25", subdir = "ComputePipeline", url = "https://github.com/MakieOrg/Makie.jl"}
 GeoInterface = {rev = "makie-v0.25", url = "https://github.com/icweaver/GeoInterface.jl"}
 GeoJSON = {rev = "makie-v0.25", url = "https://github.com/icweaver/GeoJSON.jl"}
-Makie = {rev = "units-matrix", subdir = "Makie", url = "https://github.com/icweaver/Makie.jl"}
+Makie = {rev = "ff/breaking-0.25", subdir = "Makie", url = "https://github.com/MakieOrg/Makie.jl"}
 
 [compat]
 CairoMakie = "0.16.0"

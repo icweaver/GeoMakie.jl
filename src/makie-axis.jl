@@ -17,7 +17,10 @@ function axis_setup!(axis::GeoAxis)
     setfield!(axis, :finallimits, finallimits)
     topscene = axis.blockscene
 
-    scenearea = Makie.sceneareanode!(axis.layoutobservables.computedbbox, finallimits, axis.aspect)
+    # NOTE: `Makie.sceneareanode!` is broken on ff/breaking-0.25 (the `onany` callback
+    # discards `calculate_scenearea`'s return value instead of assigning it to `area_obs`),
+    # so we replicate it here with `lift` until that's fixed upstream.
+    scenearea = lift(Makie.calculate_scenearea, axis.layoutobservables.computedbbox, finallimits, axis.aspect)
 
     scene = Scene(topscene, viewport=scenearea)
     setfield!(scene, :float32convert, Makie.Float32Convert())
@@ -25,7 +28,9 @@ function axis_setup!(axis::GeoAxis)
     axis.scene = scene
 
     onany(scene, scene.transformation.transform_func, finallimits, axis.xreversed, axis.yreversed) do transform_func, finallimits, xreversed, yreversed
-        Makie.update_axis_camera(scene, transform_func, finallimits, xreversed, yreversed)
+        projectionmatrix, eyeposition = Makie.calculate_axis_projection_matrix(scene, transform_func, finallimits, xreversed, yreversed)
+        Makie.set_proj_view!(scene.camera, projectionmatrix, Makie.Mat4f(Makie.I))
+        scene.camera.eyeposition[] = eyeposition
     end
     notify(axis.layoutobservables.suggestedbbox)
     Makie.register_events!(axis, scene)
@@ -33,7 +38,10 @@ function axis_setup!(axis::GeoAxis)
         Makie.reset_limits!(axis)
     end
     onany(scene, scene.viewport, targetlimits) do _, _
-        Makie.adjustlimits!(axis)
+        finallimits[] = Makie.adjustlimits(
+            targetlimits[], axis.autolimitaspect[], scene.viewport[],
+            axis.xautolimitmargin[], axis.yautolimitmargin[]
+        )
     end
 
     return scene
