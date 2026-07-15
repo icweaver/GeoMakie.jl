@@ -780,8 +780,16 @@ function Makie.initialize_block!(axis::GeoAxis)
         markerspace=:data,
         inspectable=false)
 
-    titlepos = lift(Makie.calculate_title_position, axis.blockscene, scene.viewport, axis.titlegap, axis.subtitlegap,
-        axis.titlealign, axis.xaxisposition, Observable(0f0), axis.subtitlelineheight, axis, subtitlet; ignore_equal_values=true)
+    titlepos = lift(axis.blockscene, scene.viewport, axis.titlegap, axis.subtitlegap,
+        axis.titlealign, axis.xaxisposition, axis.subtitlevisible, axis.subtitlelineheight;
+        ignore_equal_values=true) do area, titlegap, subtitlegap, align, xaxisposition, subtitlevisible, _
+        subtitle_height = if subtitlevisible && !Makie.iswhitespace(axis.subtitle[])
+            Float32(Makie.boundingbox(subtitlet).widths[2] + subtitlegap)
+        else
+            0f0
+        end
+        return Makie.calculate_title_position(area, titlegap, align, xaxisposition, 0f0, subtitle_height)
+    end
 
     titlet = text!(
         axis.blockscene, titlepos,
