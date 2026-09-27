@@ -716,7 +716,8 @@ function Makie.initialize_block!(axis::GeoAxis)
         if ticklabelsvisible
             max_height = 0.0
             for str in text
-                bb = Makie.text_bb(str, Makie.to_font(fonts, ticklabel_font), ticklabel_size)
+                attrs = Makie.TextAttributes(; font = Makie.to_font(fonts, ticklabel_font), fonts, fontsize = ticklabel_size)
+                bb = Makie.layout_text(nothing, str, attrs).bbox
                 max_height = max(max_height, widths(bb)[2])
             end
             ret += max_height + ticklabel_pad
@@ -735,7 +736,8 @@ function Makie.initialize_block!(axis::GeoAxis)
         if ticklabelsvisible
             max_width = 0.0
             for str in text
-                bb = Makie.text_bb(str, Makie.to_font(fonts, ticklabel_font), ticklabel_size)
+                attrs = Makie.TextAttributes(; font = Makie.to_font(fonts, ticklabel_font), fonts, fontsize = ticklabel_size)
+                bb = Makie.layout_text(nothing, str, attrs).bbox
                 max_width = max(max_width, widths(bb)[1])
             end
             ret += max_width + ticklabel_pad
